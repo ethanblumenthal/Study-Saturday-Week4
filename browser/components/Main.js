@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import StudentList from './StudentList.js';
 import SingleStudent from './SingleStudent.js';
+import NewStudentForm from './NewStudentForm'
 
 export default class Main extends Component {
   constructor(props) {
@@ -10,9 +11,11 @@ export default class Main extends Component {
     this.state = {
       students: [],
       selectedStudent: {},
+      showForm: false
     };
 
     this.selectStudent = this.selectStudent.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +38,13 @@ export default class Main extends Component {
     });
   }
 
+  onClick() {
+    event.preventDefault()
+    this.setState({
+      showForm: !this.state.showForm
+    })
+  }
+
   render() {
     return (
       <div>
@@ -54,6 +64,8 @@ export default class Main extends Component {
         {this.state.selectedStudent.id ? (
           <SingleStudent student={this.state.selectedStudent} />
         ) : null}
+        <button onClick={this.onClick}>Add New Student</button>
+        {this.state.showForm ? <NewStudentForm /> : null}
       </div>
     );
   }
